@@ -3,7 +3,7 @@ namespace Backend.Models
     public class Character
     {
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string Class { get; set; }
         public int Strength { get; set; }
         public int Intelligence { get; set; }
         public int Wisdom { get; set; }

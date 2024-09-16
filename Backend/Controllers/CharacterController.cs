@@ -9,8 +9,8 @@ namespace Backend.Controllers
     {
         private static List<Character> _character = new List<Character>
         {
-            new Character { Id = 1, Name = "Barbarian", Strength = 21, Intelligence = 8, Wisdom = 15, Constitution = 20, Dexterity = 16, Charisma = 13 },
-            new Character { Id = 1, Name = "Wizard", Strength = 10, Intelligence = 13, Wisdom = 13, Constitution = 16, Dexterity = 20, Charisma = 19 },
+            new Character { Id = 1, Class = "Barbarian", Strength = 21, Intelligence = 8, Wisdom = 15, Constitution = 20, Dexterity = 16, Charisma = 13 },
+            new Character { Id = 1, Class = "Wizard", Strength = 10, Intelligence = 13, Wisdom = 13, Constitution = 16, Dexterity = 20, Charisma = 19 },
         };
 
         // GET: api/Character
@@ -49,8 +49,13 @@ namespace Backend.Controllers
             if (character == null)
                 return NotFound();
 
-            character.Name = updatedCharacter.Name;
+            character.Class = updatedCharacter.Class;
             character.Strength = updatedCharacter.Strength;
+            character.Intelligence = updatedCharacter.Intelligence;
+            character.Wisdom = updatedCharacter.Wisdom;
+            character.Constitution = updatedCharacter.Constitution;
+            character.Dexterity = updatedCharacter.Dexterity;
+            character.Charisma = updatedCharacter.Charisma;
 
             return NoContent();
         }
