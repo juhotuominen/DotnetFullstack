@@ -4,7 +4,7 @@ builder.WebHost.ConfigureKestrel(options =>
 {
     options.ListenAnyIP(7154, listenOptions =>
     {
-        listenOptions.UseHttps(); // HTTPS
+        listenOptions.UseHttps();
     });
 });
 
@@ -17,7 +17,7 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.UseCors("AllowAllOrigins");  // Apply the CORS policy
+app.UseCors("AllowAllOrigins");
 
 app.UseAuthorization();
 

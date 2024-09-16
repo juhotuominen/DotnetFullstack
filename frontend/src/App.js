@@ -1,115 +1,146 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const apiUrl = "https://localhost:7154/api/Product";
+const apiUrl = "https://localhost:7154/api/Character";
 
 function App() {
-  const [products, setProducts] = useState([]);
-  const [newProduct, setNewProduct] = useState({ name: "", price: 0 });
-  const [editingProduct, setEditingProduct] = useState(null);
+  const [characters, setCharacters] = useState([]);
+  const [newCharacter, setNewCharacter] = useState({ name: "", strength: 0, intelligence: 0, wisdom: 0, constitution: 0, dexterity: 0, charisma: 0 });
+  const [editCharacter, setEditCharacter] = useState(null);
 
-  // Fetch products from API
+  // Fetch characters from API
   useEffect(() => {
-    fetchProducts();
+    fetchCharacters();
   }, []);
 
-  const fetchProducts = async () => {
+  const fetchCharacters = async () => {
     try {
       const response = await axios.get(apiUrl);
-      setProducts(response.data);
+      setCharacters(response.data);
     } catch (error) {
-      console.error("Error fetching products:", error);
+      console.error("Error fetching characters:", error);
     }
   };
 
-  const addProduct = async () => {
+  const addCharacter = async () => {
     try {
-      await axios.post(apiUrl, newProduct);
-      setNewProduct({ name: "", price: 0 });
-      fetchProducts();
+      await axios.post(apiUrl, newCharacter);
+      setNewCharacter({ name: "", strength: 0, intelligence: 0, wisdom: 0, constitution: 0, dexterity: 0, charisma: 0 });
+      fetchCharacters();
     } catch (error) {
-      console.error("Error adding product:", error);
+      console.error("Error adding character:", error);
     }
   };
 
-  const deleteProduct = async (id) => {
+  const deleteCharacter = async (id) => {
     try {
       await axios.delete(`${apiUrl}/${id}`);
-      fetchProducts();
+      fetchCharacters();
     } catch (error) {
-      console.error("Error deleting product:", error);
+      console.error("Error deleting character:", error);
     }
   };
 
-  const startEditProduct = (product) => {
-    setEditingProduct(product);
+  const startEditCharacter = (character) => {
+    setEditCharacter(character);
   };
 
-  const updateProduct = async () => {
+  const updateCharacter = async () => {
     try {
-      await axios.put(`${apiUrl}/${editingProduct.id}`, editingProduct);
-      setEditingProduct(null);
-      fetchProducts();
+      await axios.put(`${apiUrl}/${editCharacter.id}`, editCharacter);
+      setEditCharacter(null);
+      fetchCharacters();
     } catch (error) {
-      console.error("Error updating product:", error);
+      console.error("Error updating character:", error);
     }
   };
 
   return (
     <div className="App">
-      <h1>Product Manager</h1>
+      <h1>DnD Character Creator</h1>
 
-      {/* List Products */}
-      <h2>Products</h2>
+      {/* List Characters */}
+      <h2>Characters</h2>
       <ul>
-        {products.map((product) => (
-          <li key={product.id}>
-            {product.name} - ${product.price.toFixed(2)}
-            <button onClick={() => startEditProduct(product)}>Edit</button>
-            <button onClick={() => deleteProduct(product.id)}>Delete</button>
+        {characters.map((character) => (
+          <li key={character.id}>
+            {character.name} - STR: {character.strength} - INT: {character.intelligence} - WIS: {character.wisdom} - CON: {character.constitution} - DEX: {character.dexterity} - CHA: {character.charisma} <br></br>
+            <button onClick={() => startEditCharacter(character)}>Edit</button>
+            <button onClick={() => deleteCharacter(character.id)}>Delete</button>
+            <br></br><br></br>
           </li>
         ))}
       </ul>
 
-      {/* Add Product */}
-      <h2>Add New Product</h2>
+      {/* Add Character */}
+      <h2>Add New Character</h2>
       <input
         type="text"
         placeholder="Name"
-        value={newProduct.name}
-        onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+        value={newCharacter.name}
+        onChange={(e) => setNewCharacter({ ...newCharacter, name: e.target.value })}
       />
       <input
         type="number"
-        placeholder="Price"
-        value={newProduct.price}
-        onChange={(e) => setNewProduct({ ...newProduct, price: parseFloat(e.target.value) })}
+        placeholder="Strength"
+        value={newCharacter.strength}
+        onChange={(e) => setNewCharacter({ ...newCharacter, strength: e.target.value })}
       />
-      <button onClick={addProduct}>Add Product</button>
+      <input
+        type="number"
+        placeholder="Intelligence"
+        value={newCharacter.intelligence}
+        onChange={(e) => setNewCharacter({ ...newCharacter, intelligence: e.target.value })}
+      />
+      <input
+        type="number"
+        placeholder="Wisdom"
+        value={newCharacter.wisdom}
+        onChange={(e) => setNewCharacter({ ...newCharacter, wisdom: e.target.value })}
+      />
+      <input
+        type="number"
+        placeholder="Constitution"
+        value={newCharacter.constitution}
+        onChange={(e) => setNewCharacter({ ...newCharacter, constitution: e.target.value })}
+      />
+      <input
+        type="number"
+        placeholder="Dexterity"
+        value={newCharacter.dexterity}
+        onChange={(e) => setNewCharacter({ ...newCharacter, dexterity: e.target.value })}
+      />
+      <input
+        type="number"
+        placeholder="Charisma"
+        value={newCharacter.charisma}
+        onChange={(e) => setNewCharacter({ ...newCharacter, charisma: e.target.value })}
+      />
+      <button onClick={addCharacter}>Add Character</button>
 
-      {/* Edit Product */}
-      {editingProduct && (
+      {/* Edit character */}
+      {editCharacter && (
         <div>
-          <h2>Edit Product</h2>
+          <h2>Edit Character</h2>
           <input
             type="text"
-            value={editingProduct.name}
+            value={editCharacter.name}
             onChange={(e) =>
-              setEditingProduct({ ...editingProduct, name: e.target.value })
+              setEditCharacter({ ...editCharacter, name: e.target.value })
             }
           />
           <input
             type="number"
-            value={editingProduct.price}
+            value={editCharacter.strength}
             onChange={(e) =>
-              setEditingProduct({
-                ...editingProduct,
-                price: parseFloat(e.target.value),
+              setEditCharacter({
+                ...editCharacter,
+                strength: parseFloat(e.target.value),
               })
             }
           />
-          <button onClick={updateProduct}>Update Product</button>
-          <button onClick={() => setEditingProduct(null)}>Cancel</button>
+          <button onClick={updateCharacter}>Update Character</button>
+          <button onClick={() => setEditCharacter(null)}>Cancel</button>
         </div>
       )}
     </div>
